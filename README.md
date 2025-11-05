@@ -31,11 +31,9 @@
 - **Frontend**: Next.js 14 (App Router), TypeScript, TailwindCSS
 - **UI Components**: shadcn/ui, Radix UI
 - **State Management**: Zustand
-- **Database**: Prisma + SQLite (개발) / PlanetScale (프로덕션)
 - **Styling**: TailwindCSS + class-variance-authority
 - **Icons**: Lucide React
 - **Testing**: Vitest (유닛), Playwright (E2E)
-- **Deployment**: Vercel
 
 ## 📦 설치 및 실행
 
@@ -50,42 +48,7 @@ cd book-exchange-platform
 npm install
 ```
 
-### 3. 환경 변수 설정
-```bash
-cp .env.example .env.local
-```
-
-`.env.local` 파일을 열어 필요한 환경 변수를 설정하세요:
-
-```env
-# Database
-DATABASE_URL="file:./dev.db"
-
-# Next.js
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-secret-key-here"
-
-# OAuth (개발용)
-KAKAO_CLIENT_ID="your-kakao-client-id"
-KAKAO_CLIENT_SECRET="your-kakao-client-secret"
-
-# App
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-```
-
-### 4. 데이터베이스 설정
-```bash
-# Prisma 클라이언트 생성
-npx prisma generate
-
-# 데이터베이스 마이그레이션
-npx prisma migrate dev --name init
-
-# 시드 데이터 생성
-npx prisma db seed
-```
-
-### 5. 개발 서버 실행
+### 3. 개발 서버 실행
 ```bash
 npm run dev
 ```
@@ -107,26 +70,42 @@ npm run test:e2e
 ## 📁 프로젝트 구조
 
 ```
-src/
-├── app/                    # Next.js App Router
-│   ├── (marketing)/       # 마케팅 페이지
-│   ├── exchange/          # 교환존 페이지
-│   ├── journey/           # 여정 페이지
-│   ├── community/         # 커뮤니티 페이지
-│   ├── me/               # 마이페이지
-│   └── api/              # API 라우트
-├── components/            # React 컴포넌트
-│   ├── ui/               # 기본 UI 컴포넌트
-│   ├── layout/           # 레이아웃 컴포넌트
-│   ├── home/             # 홈페이지 컴포넌트
-│   ├── exchange/         # 교환존 컴포넌트
-│   ├── journey/          # 여정 컴포넌트
-│   ├── community/        # 커뮤니티 컴포넌트
-│   └── me/               # 마이페이지 컴포넌트
-├── lib/                  # 유틸리티 함수
-├── store/                # Zustand 스토어
-├── types/                # TypeScript 타입 정의
-└── hooks/                # 커스텀 훅
+책책홈페이지/
+├── app/                   # Next.js App Router (루트)
+│   ├── api/              # API 라우트
+│   ├── exchange/         # 교환존 페이지
+│   ├── journey/          # 여정 페이지
+│   ├── community/        # 커뮤니티 페이지
+│   └── me/               # 마이페이지
+│
+├── lib/                   # 유틸리티 및 데이터 (루트)
+│   ├── mockData.ts       # 더미 데이터
+│   └── utils.ts          # 유틸리티 함수
+│
+├── scripts/              # 스크립트 및 설정 정보
+│   └── README.md         # 스크립트 설명
+│
+├── src/                  # 소스 코드 (통합 불가)
+│   └── components/       # React 컴포넌트
+│       ├── ui/           # 기본 UI 컴포넌트
+│       ├── layout/       # 레이아웃 컴포넌트
+│       ├── home/         # 홈페이지 컴포넌트
+│       ├── exchange/     # 교환존 컴포넌트
+│       ├── journey/      # 여정 컴포넌트
+│       ├── community/    # 커뮤니티 컴포넌트
+│       └── me/           # 마이페이지 컴포넌트
+│
+├── tests/                # 테스트 파일
+│   └── e2e/              # E2E 테스트
+│
+└── [설정 파일들]         # 루트에 위치
+    ├── .gitignore        # Git 제외 파일
+    ├── next.config.js    # Next.js 설정
+    ├── package.json      # 패키지 의존성
+    ├── package-lock.json # 패키지 잠금 파일
+    ├── tsconfig.json     # TypeScript 설정
+    ├── tailwind.config.ts # Tailwind CSS 설정
+    └── README.md         # 프로젝트 문서
 ```
 
 ## 🎨 디자인 시스템
@@ -143,38 +122,6 @@ src/
 
 ### 간격 시스템
 - 8px 베이스 그리드 시스템
-
-## 🚀 배포
-
-### Vercel 배포
-
-1. **Vercel 계정 생성**
-   - [Vercel](https://vercel.com)에서 계정 생성
-
-2. **프로젝트 연결**
-   ```bash
-   npm i -g vercel
-   vercel
-   ```
-
-3. **환경 변수 설정**
-   - Vercel 대시보드에서 환경 변수 설정
-   - 프로덕션 데이터베이스 URL 설정
-
-4. **자동 배포**
-   - GitHub 저장소와 연결하면 자동 배포
-
-### 데이터베이스 마이그레이션
-
-프로덕션 환경에서는 PlanetScale 또는 Neon을 사용하는 것을 권장합니다:
-
-```bash
-# 프로덕션 데이터베이스 URL 설정
-DATABASE_URL="postgresql://username:password@host:port/database"
-
-# 마이그레이션 실행
-npx prisma migrate deploy
-```
 
 ## 📱 모바일 지원
 
@@ -203,10 +150,9 @@ chore: 빌드 설정 변경
 ```
 
 ### 브랜치 전략
-- `main`: 프로덕션 브랜치
+- `main`: 메인 브랜치
 - `develop`: 개발 브랜치
 - `feature/*`: 기능 개발 브랜치
-- `hotfix/*`: 긴급 수정 브랜치
 
 ## 📄 라이선스
 
