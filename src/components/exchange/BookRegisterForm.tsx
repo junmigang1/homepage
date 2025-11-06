@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Upload, X, Check } from 'lucide-react'
-import { useToast } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 
 const conditions = ['새책', '양호', '보통', '나쁨']
@@ -24,7 +24,6 @@ export function BookRegisterForm() {
     coverPreview: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const toast = useToast()
   const router = useRouter()
 
   const handleInputChange = (field: string, value: string) => {
@@ -62,16 +61,53 @@ export function BookRegisterForm() {
     }
 
     try {
-      // 실제 구현에서는 API 호출
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // 이미지 URL 처리 (파일이 있으면 임시로 preview URL 사용, 없으면 기본 이미지)
+      let coverUrl = formData.coverPreview || 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=200'
+      
+      // API 호출
+      const response = await fetch('/api/books', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: formData.title,
+          author: formData.author,
+          condition: formData.condition,
+          genre: formData.genre || undefined,
+          exchangeMethod: formData.exchangeMethod,
+          message: formData.message || undefined,
+          coverUrl: coverUrl,
+          ownerId: '1', // 임시로 첫 번째 사용자 ID 사용
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('책 등록에 실패했습니다.')
+      }
+
+      const newBook = await response.json()
       
       toast.success('책이 여정에 올라탔어요! 📖', {
         duration: 4000,
       })
       
-      // 성공 후 여정 페이지로 이동 (실제로는 생성된 책 ID 사용)
-      router.push('/journey/sample-book-id')
+      // 성공 후 여정 페이지로 이동
+      router.push(`/journey/${newBook.id}`)
+      
+      // 폼 초기화
+      setFormData({
+        title: '',
+        author: '',
+        condition: '',
+        exchangeMethod: '',
+        genre: '',
+        message: '',
+        coverFile: null,
+        coverPreview: '',
+      })
     } catch (error) {
+      console.error('Error creating book:', error)
       toast.error('책 등록에 실패했습니다. 다시 시도해주세요.')
     } finally {
       setIsSubmitting(false)

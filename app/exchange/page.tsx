@@ -1,9 +1,23 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BookRegisterForm } from '@/components/exchange/BookRegisterForm'
 import { BookBrowse } from '@/components/exchange/BookBrowse'
 import { ExchangeProgress } from '@/components/exchange/ExchangeProgress'
 
 export default function ExchangePage() {
+  const searchParams = useSearchParams()
+  const tabParam = searchParams.get('tab')
+  const [activeTab, setActiveTab] = useState('register')
+
+  useEffect(() => {
+    if (tabParam === 'register' || tabParam === 'browse' || tabParam === 'progress') {
+      setActiveTab(tabParam)
+    }
+  }, [tabParam])
+
   return (
     <div className="container py-8">
       <div className="max-w-4xl mx-auto">
@@ -16,7 +30,7 @@ export default function ExchangePage() {
           </p>
         </div>
 
-        <Tabs defaultValue="register" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="register">책 등록</TabsTrigger>
             <TabsTrigger value="browse">검색 & 추천</TabsTrigger>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -9,81 +9,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Search, Filter, Heart, MessageCircle, Share2, Star, MapPin } from 'lucide-react'
 import Image from 'next/image'
-import { useToast } from 'react-hot-toast'
-
-// 목업 데이터
-const books = [
-  {
-    id: '1',
-    title: '사피엔스',
-    author: '유발 하라리',
-    coverUrl: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=200&h=300&fit=crop',
-    genre: '인문학',
-    condition: '양호',
-    owner: '독서왕김철수',
-    ownerSchool: '서울대학교',
-    location: '서울 강남구',
-    rating: 4.8,
-    reviewCount: 23,
-    isExchangeable: true,
-    exchangeMethod: '택배',
-    description: '인류의 역사를 새로운 관점에서 바라본 명작입니다.',
-  },
-  {
-    id: '2',
-    title: '완벽한 공부법',
-    author: '이지성',
-    coverUrl: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=200&h=300&fit=crop',
-    genre: '자기계발',
-    condition: '새책',
-    owner: '공부러버',
-    ownerSchool: '연세대학교',
-    location: '서울 서초구',
-    rating: 4.6,
-    reviewCount: 15,
-    isExchangeable: true,
-    exchangeMethod: '보관함',
-    description: '효율적인 공부 방법을 제시하는 실용적인 책입니다.',
-  },
-  {
-    id: '3',
-    title: '미드나잇 라이브러리',
-    author: '매트 헤이그',
-    coverUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=300&fit=crop',
-    genre: '소설',
-    condition: '양호',
-    owner: '책벌레영희',
-    ownerSchool: '고려대학교',
-    location: '서울 마포구',
-    rating: 4.9,
-    reviewCount: 31,
-    isExchangeable: false,
-    exchangeMethod: '택배',
-    description: '인생의 의미를 되돌아보게 하는 감동적인 소설입니다.',
-  },
-  {
-    id: '4',
-    title: '부의 추월차선',
-    author: '엠제이 드마코',
-    coverUrl: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=200&h=300&fit=crop',
-    genre: '경제',
-    condition: '양호',
-    owner: '투자왕',
-    ownerSchool: '성균관대학교',
-    location: '서울 송파구',
-    rating: 4.5,
-    reviewCount: 18,
-    isExchangeable: true,
-    exchangeMethod: '택배',
-    description: '부를 창출하는 새로운 사고방식을 제시합니다.',
-  },
-]
+import toast from 'react-hot-toast'
 
 const genres = ['전체', '소설', '에세이', '자기계발', '인문학', '경제', '과학', '역사', '철학', '예술', '기타']
 const conditions = ['전체', '새책', '양호', '보통', '나쁨']
 const schools = ['전체', '서울대학교', '연세대학교', '고려대학교', '성균관대학교', '한양대학교']
 
 export function BookBrowse() {
+  const [books, setBooks] = useState<any[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedGenre, setSelectedGenre] = useState('전체')
   const [selectedCondition, setSelectedCondition] = useState('전체')
@@ -91,7 +24,41 @@ export function BookBrowse() {
   const [showFilters, setShowFilters] = useState(false)
   const [selectedBook, setSelectedBook] = useState<any>(null)
   const [isExchangeDialogOpen, setIsExchangeDialogOpen] = useState(false)
-  const toast = useToast()
+  const [isLoading, setIsLoading] = useState(true)
+
+  // API에서 책 목록 가져오기
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch('/api/books')
+        if (response.ok) {
+          const data = await response.json()
+          // API 데이터를 UI에 맞게 변환
+          const transformedBooks = data.map((book: any) => ({
+            ...book,
+            owner: book.owner?.name || '알 수 없음',
+            ownerSchool: book.owner?.school || '알 수 없음',
+            location: '서울 강남구', // 임시 데이터
+            rating: book.reviews?.length > 0 
+              ? book.reviews.reduce((sum: number, r: any) => sum + (r.rating || 0), 0) / book.reviews.length 
+              : 4.5,
+            reviewCount: book.reviews?.length || 0,
+            exchangeMethod: '택배', // 임시 데이터
+          }))
+          setBooks(transformedBooks)
+        } else {
+          toast.error('책 목록을 불러오는데 실패했습니다.')
+        }
+      } catch (error) {
+        console.error('Error fetching books:', error)
+        toast.error('책 목록을 불러오는데 실패했습니다.')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchBooks()
+  }, [])
 
   const filteredBooks = books.filter(book => {
     const matchesSearch = book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -108,10 +75,34 @@ export function BookBrowse() {
     setIsExchangeDialogOpen(true)
   }
 
-  const confirmExchange = () => {
-    toast.success(`${selectedBook.title} 교환 요청이 전송되었습니다!`)
-    setIsExchangeDialogOpen(false)
-    setSelectedBook(null)
+  const confirmExchange = async () => {
+    if (!selectedBook) return
+
+    try {
+      const response = await fetch('/api/exchanges', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          bookId: selectedBook.id,
+          requesterId: '1', // 임시로 첫 번째 사용자 ID 사용
+          ownerId: selectedBook.ownerId || '1',
+          method: selectedBook.exchangeMethod || '택배',
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('교환 요청에 실패했습니다.')
+      }
+
+      toast.success(`${selectedBook.title} 교환 요청이 전송되었습니다!`)
+      setIsExchangeDialogOpen(false)
+      setSelectedBook(null)
+    } catch (error) {
+      console.error('Error creating exchange:', error)
+      toast.error('교환 요청에 실패했습니다. 다시 시도해주세요.')
+    }
   }
 
   return (
@@ -205,8 +196,13 @@ export function BookBrowse() {
       </Card>
 
       {/* 책 목록 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredBooks.map((book) => (
+      {isLoading ? (
+        <div className="text-center py-8">
+          <p className="text-muted-foreground">책 목록을 불러오는 중...</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredBooks.map((book) => (
           <Card 
             key={book.id} 
             className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
@@ -299,7 +295,8 @@ export function BookBrowse() {
             </CardFooter>
           </Card>
         ))}
-      </div>
+        </div>
+      )}
 
       {/* 교환 요청 다이얼로그 */}
       <Dialog open={isExchangeDialogOpen} onOpenChange={setIsExchangeDialogOpen}>

@@ -26,13 +26,13 @@ export function Hero() {
           {/* CTA 버튼 */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Button size="lg" className="text-lg px-8 py-6" asChild>
-              <Link href="/exchange/register">
+              <Link href="/exchange?tab=register">
                 내 책 여정 시작하기
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button variant="outline" size="lg" className="text-lg px-8 py-6" asChild>
-              <Link href="/exchange/browse">
+              <Link href="/exchange?tab=browse">
                 책 둘러보기
               </Link>
             </Button>
