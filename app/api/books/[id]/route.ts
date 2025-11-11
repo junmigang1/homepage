@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { mockBooks, mockJourneyNodes, mockReviews, mockUsers } from '@/lib/mockData'
+import { mockBooks, mockJourneyNodes, mockReviews } from '@/lib/mockData'
 
 export async function GET(
   request: NextRequest,

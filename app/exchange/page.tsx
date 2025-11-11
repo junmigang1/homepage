@@ -13,7 +13,11 @@ export default function ExchangePage() {
   const [activeTab, setActiveTab] = useState('register')
 
   useEffect(() => {
-    if (tabParam === 'register' || tabParam === 'browse' || tabParam === 'progress') {
+    if (
+      tabParam === 'register' ||
+      tabParam === 'browse' ||
+      tabParam === 'progress'
+    ) {
       setActiveTab(tabParam)
     }
   }, [tabParam])
@@ -22,9 +26,7 @@ export default function ExchangePage() {
     <div className="container py-8">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-primary mb-4">
-            교환존
-          </h1>
+          <h1 className="text-3xl font-bold text-primary mb-4">교환존</h1>
           <p className="text-muted-foreground">
             책을 등록하고, 찾고, 교환해보세요
           </p>
@@ -36,15 +38,15 @@ export default function ExchangePage() {
             <TabsTrigger value="browse">검색 & 추천</TabsTrigger>
             <TabsTrigger value="progress">진행 현황</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="register" className="mt-6">
             <BookRegisterForm />
           </TabsContent>
-          
+
           <TabsContent value="browse" className="mt-6">
             <BookBrowse />
           </TabsContent>
-          
+
           <TabsContent value="progress" className="mt-6">
             <ExchangeProgress />
           </TabsContent>

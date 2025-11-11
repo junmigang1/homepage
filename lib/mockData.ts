@@ -5,21 +5,24 @@ export const mockUsers = [
     id: '1',
     name: '김독서',
     school: '서울대학교',
-    avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100',
+    avatarUrl:
+      'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100',
     reputation: 100,
   },
   {
     id: '2',
     name: '이책사랑',
     school: '연세대학교',
-    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100',
+    avatarUrl:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100',
     reputation: 85,
   },
   {
     id: '3',
     name: '박책벌레',
     school: '고려대학교',
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
+    avatarUrl:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
     reputation: 120,
   },
 ]
@@ -42,7 +45,8 @@ export const mockBooks = [
     id: '2',
     title: '1984',
     author: '조지 오웰',
-    coverUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200',
+    coverUrl:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200',
     condition: '보통',
     genre: '소설',
     ownerId: '2',
@@ -55,7 +59,8 @@ export const mockBooks = [
     id: '3',
     title: '노인과 바다',
     author: '어니스트 헤밍웨이',
-    coverUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200',
+    coverUrl:
+      'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200',
     condition: '좋음',
     genre: '소설',
     ownerId: '3',
@@ -74,7 +79,7 @@ export const mockJourneyNodes = [
     user: mockUsers[0],
     city: '서울',
     lat: 37.5665,
-    lng: 126.9780,
+    lng: 126.978,
     note: '정말 재미있는 책이에요!',
     emotion: '기쁨',
     createdAt: new Date('2024-01-15'),
@@ -143,4 +148,3 @@ export const mockReviews = [
     createdAt: new Date('2024-01-21'),
   },
 ]
-

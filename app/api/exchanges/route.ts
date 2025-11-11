@@ -1,50 +1,71 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { mockExchanges } from '@/lib/mockData'
+import { getRedisClient } from '@/lib/redis'
+import { getCurrentUserId } from '@/lib/auth'
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const userId = searchParams.get('userId')
+    const queryUserId = searchParams.get('userId')
 
-    let filteredExchanges = [...mockExchanges]
+    const redis = getRedisClient()
+    const keys = await redis.keys('exchange:*')
+    const exchanges = await Promise.all(
+      keys.map(async key => JSON.parse((await redis.get(key)) || '{}'))
+    )
 
-    if (userId) {
+    let filteredExchanges = [...exchanges]
+
+    if (queryUserId) {
       filteredExchanges = filteredExchanges.filter(
-        exchange => exchange.requesterId === userId || exchange.ownerId === userId
+        exchange =>
+          exchange.requesterId === queryUserId ||
+          exchange.ownerId === queryUserId
       )
     }
 
     return NextResponse.json(filteredExchanges)
   } catch (error) {
     console.error('Error fetching exchanges:', error)
-    return NextResponse.json({ error: 'Failed to fetch exchanges' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to fetch exchanges' },
+      { status: 500 }
+    )
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
+    const userId = await getCurrentUserId()
+    if (!userId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const body = await request.json()
-    const { bookId, requesterId, ownerId, method } = body
+    const { bookId, ownerId, method } = body
 
     const newExchange = {
-      id: String(mockExchanges.length + 1),
+      id: String(Date.now()),
       bookId,
-      book: mockExchanges[0].book, // 임시로 첫 번째 책 사용
-      requesterId,
-      requester: mockExchanges[0].requester,
-      ownerId,
-      owner: mockExchanges[0].owner,
+      book: null,
+      requester: null,
+      owner: null,
+      requesterId: userId, // 로그인한 사용자로 설정
+      ownerId, // 요청 본문에서 받음
       method,
       status: 'requested' as const,
       createdAt: new Date(),
       updatedAt: new Date(),
     }
 
-    mockExchanges.push(newExchange)
+    const redis = getRedisClient()
+    await redis.set(`exchange:${newExchange.id}`, JSON.stringify(newExchange))
 
     return NextResponse.json(newExchange)
   } catch (error) {
     console.error('Error creating exchange:', error)
-    return NextResponse.json({ error: 'Failed to create exchange' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to create exchange' },
+      { status: 500 }
+    )
   }
 }

@@ -1,5 +1,7 @@
+// app/api/reviews/route.ts
 import { NextRequest, NextResponse } from 'next/server'
-import { mockReviews } from '@/lib/mockData'
+import { getRedisClient } from '@/lib/redis'
+import { getCurrentUserId } from '@/lib/auth'
 
 export async function GET(request: NextRequest) {
   try {
@@ -7,44 +9,61 @@ export async function GET(request: NextRequest) {
     const bookId = searchParams.get('bookId')
     const limit = searchParams.get('limit')
 
-    let filteredReviews = [...mockReviews]
+    const redis = getRedisClient()
+    const keys = await redis.keys('review:*')
+    let reviews = await Promise.all(
+      keys.map(async key => JSON.parse((await redis.get(key)) || '{}'))
+    )
 
+    // 필터링
     if (bookId) {
-      filteredReviews = filteredReviews.filter(review => review.bookId === bookId)
+      reviews = reviews.filter(review => review.bookId === bookId)
     }
 
     if (limit) {
-      filteredReviews = filteredReviews.slice(0, parseInt(limit))
+      reviews = reviews.slice(0, parseInt(limit))
     }
 
-    return NextResponse.json(filteredReviews)
+    return NextResponse.json(reviews)
   } catch (error) {
     console.error('Error fetching reviews:', error)
-    return NextResponse.json({ error: 'Failed to fetch reviews' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to fetch reviews' },
+      { status: 500 }
+    )
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
+    const userId = await getCurrentUserId()
+    if (!userId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const body = await request.json()
-    const { bookId, userId, content, rating } = body
+    const { bookId, content, rating } = body
 
     const newReview = {
-      id: String(mockReviews.length + 1),
+      id: String(Date.now()),
       bookId,
-      book: mockReviews[0].book, // 임시로 첫 번째 책 사용
       userId,
-      user: mockReviews[0].user, // 임시로 첫 번째 사용자 사용
+      book: null, // TODO: 나중에 책 정보 불러오기
+      user: null, // TODO: 나중에 사용자 프로필 연동
       content,
       rating,
       createdAt: new Date(),
     }
 
-    mockReviews.push(newReview)
+    const redis = getRedisClient()
+    await redis.set(`review:${newReview.id}`, JSON.stringify(newReview))
 
     return NextResponse.json(newReview)
   } catch (error) {
     console.error('Error creating review:', error)
-    return NextResponse.json({ error: 'Failed to create review' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to create review' },
+      { status: 500 }
+    )
   }
 }

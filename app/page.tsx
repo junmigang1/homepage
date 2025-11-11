@@ -9,7 +9,7 @@ export default function HomePage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <Hero />
-      
+
       {/* 실시간 여정 피드 */}
       <section className="py-16 bg-secondary/30">
         <div className="container">

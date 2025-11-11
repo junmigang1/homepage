@@ -11,7 +11,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: '책책 - 교환독서 플랫폼',
-  description: '책은 떠돌며 새로운 이야기를 만납니다. 교환독서로 책의 여정을 함께해보세요.',
+  description:
+    '책은 떠돌며 새로운 이야기를 만납니다. 교환독서로 책의 여정을 함께해보세요.',
   keywords: ['교환독서', '책', '독서', '커뮤니티', '여정'],
   authors: [{ name: '책책팀' }],
   openGraph: {
@@ -33,13 +34,11 @@ export default function RootLayout({
         <Providers>
           <div className="flex min-h-screen flex-col">
             <Header />
-            <main className="flex-1 pb-16 md:pb-0">
-              {children}
-            </main>
+            <main className="flex-1 pb-16 md:pb-0">{children}</main>
             <Footer />
             <MobileTabBar />
           </div>
-          <Toaster 
+          <Toaster
             position="top-center"
             toastOptions={{
               duration: 3000,

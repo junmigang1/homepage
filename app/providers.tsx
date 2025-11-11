@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
+import { SessionProvider } from 'next-auth/react'
 
 // 다크모드 컨텍스트
 const ThemeContext = createContext<{
@@ -27,7 +28,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [theme])
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light')
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'))
   }
 
   return (
@@ -48,8 +49,8 @@ export const useTheme = () => {
 // 메인 프로바이더
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider>
-      {children}
-    </ThemeProvider>
+    <SessionProvider>
+      <ThemeProvider>{children}</ThemeProvider>
+    </SessionProvider>
   )
 }
