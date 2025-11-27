@@ -17,13 +17,17 @@ export function MobileTabBar() {
   const pathname = usePathname()
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t md:hidden" data-testid="mobile-tab-bar">
+    <div
+      className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t md:hidden"
+      data-testid="mobile-tab-bar"
+    >
       <nav className="flex items-center justify-around h-16">
-        {mobileNavigation.map((item) => {
+        {mobileNavigation.map(item => {
           const Icon = item.icon
-          const isActive = pathname === item.href || 
+          const isActive =
+            pathname === item.href ||
             (item.href !== '/' && pathname.startsWith(item.href))
-          
+
           return (
             <Link
               key={item.name}
@@ -35,10 +39,7 @@ export function MobileTabBar() {
                   : 'text-muted-foreground hover:text-foreground'
               )}
             >
-              <Icon className={cn(
-                'h-5 w-5',
-                isActive && 'text-primary'
-              )} />
+              <Icon className={cn('h-5 w-5', isActive && 'text-primary')} />
               <span className="text-xs font-medium">{item.name}</span>
             </Link>
           )

@@ -10,7 +10,7 @@ const journeyNodes = [
     id: '1',
     city: '서울 강남구',
     lat: 37.5665,
-    lng: 126.9780,
+    lng: 126.978,
     reader: '독서왕김철수',
     date: '2024-01-15',
     emotion: '감동',
@@ -43,7 +43,7 @@ const journeyNodes = [
     id: '4',
     city: '서울 송파구',
     lat: 37.5146,
-    lng: 127.1050,
+    lng: 127.105,
     reader: '문학청년',
     date: '2024-01-01',
     emotion: '호기심',
@@ -87,20 +87,22 @@ export function JourneyMap({ bookId }: { bookId: string }) {
               key={node.id}
               className="absolute transform -translate-x-1/2 -translate-y-1/2"
               style={{
-                left: `${20 + (index * 20)}%`,
+                left: `${20 + index * 20}%`,
                 top: `${30 + (index % 2) * 40}%`,
               }}
             >
-              <div className={`w-4 h-4 rounded-full border-2 ${
-                node.isCurrent 
-                  ? 'bg-primary border-primary' 
-                  : 'bg-white border-muted-foreground'
-              } shadow-lg`}>
+              <div
+                className={`w-4 h-4 rounded-full border-2 ${
+                  node.isCurrent
+                    ? 'bg-primary border-primary'
+                    : 'bg-white border-muted-foreground'
+                } shadow-lg`}
+              >
                 {node.isCurrent && (
                   <div className="w-full h-full rounded-full bg-white animate-ping"></div>
                 )}
               </div>
-              
+
               {/* 노드 라벨 */}
               <div className="absolute top-6 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
                 <div className="bg-white rounded-lg px-2 py-1 shadow-md text-xs">
@@ -116,9 +118,9 @@ export function JourneyMap({ bookId }: { bookId: string }) {
             {journeyNodes.slice(0, -1).map((_, index) => (
               <line
                 key={index}
-                x1={`${20 + (index * 20)}%`}
+                x1={`${20 + index * 20}%`}
                 y1={`${30 + (index % 2) * 40}%`}
-                x2={`${20 + ((index + 1) * 20)}%`}
+                x2={`${20 + (index + 1) * 20}%`}
                 y2={`${30 + ((index + 1) % 2) * 40}%`}
                 stroke="#4A7043"
                 strokeWidth="2"
@@ -144,21 +146,25 @@ export function JourneyMap({ bookId }: { bookId: string }) {
         <div className="mt-6 space-y-4">
           <h4 className="font-semibold">여정 기록</h4>
           <div className="space-y-3">
-            {journeyNodes.map((node) => (
+            {journeyNodes.map(node => (
               <div
                 key={node.id}
                 className={`flex items-center gap-3 p-3 rounded-lg border ${
-                  node.isCurrent ? 'border-primary bg-primary/5' : 'border-muted'
+                  node.isCurrent
+                    ? 'border-primary bg-primary/5'
+                    : 'border-muted'
                 }`}
               >
-                <div className={`w-3 h-3 rounded-full ${
-                  node.isCurrent ? 'bg-primary' : 'bg-muted-foreground'
-                }`} />
+                <div
+                  className={`w-3 h-3 rounded-full ${
+                    node.isCurrent ? 'bg-primary' : 'bg-muted-foreground'
+                  }`}
+                />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-medium text-sm">{node.reader}</span>
-                    <Badge 
-                      variant="outline" 
+                    <Badge
+                      variant="outline"
                       className={`text-xs ${emotionColors[node.emotion as keyof typeof emotionColors]}`}
                     >
                       {node.emotion}

@@ -69,7 +69,7 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-  
+
   .scrollbar-thin {
     scrollbar-width: thin;
   }
@@ -81,7 +81,7 @@
     border-radius: 3px;
   }
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: #4A7043;
+    background: #4a7043;
     border-radius: 3px;
   }
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
@@ -91,8 +91,14 @@
 
 /* 애니메이션 */
 @keyframes confetti {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 .confetti {

@@ -4,7 +4,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Mail, Truck, Package, CheckCircle, Clock, MapPin, User } from 'lucide-react'
+import {
+  Mail,
+  Truck,
+  Package,
+  CheckCircle,
+  Clock,
+  MapPin,
+  User,
+} from 'lucide-react'
 import Image from 'next/image'
 import { formatRelativeTime } from '@/lib/utils'
 
@@ -16,7 +24,8 @@ const exchanges = {
       book: {
         title: '사피엔스',
         author: '유발 하라리',
-        coverUrl: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=60&h=90&fit=crop',
+        coverUrl:
+          'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=60&h=90&fit=crop',
       },
       type: 'requested',
       status: 'accepted',
@@ -33,7 +42,8 @@ const exchanges = {
       book: {
         title: '1984',
         author: '조지 오웰',
-        coverUrl: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=60&h=90&fit=crop',
+        coverUrl:
+          'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=60&h=90&fit=crop',
       },
       type: 'received',
       status: 'requested',
@@ -51,7 +61,8 @@ const exchanges = {
       book: {
         title: '미드나잇 라이브러리',
         author: '매트 헤이그',
-        coverUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=90&fit=crop',
+        coverUrl:
+          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=90&fit=crop',
       },
       type: 'requested',
       status: 'completed',
@@ -67,7 +78,8 @@ const exchanges = {
       book: {
         title: '완벽한 공부법',
         author: '이지성',
-        coverUrl: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=60&h=90&fit=crop',
+        coverUrl:
+          'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=60&h=90&fit=crop',
       },
       type: 'received',
       status: 'completed',
@@ -88,7 +100,7 @@ const getStepIcon = (stepId: string, status: string) => {
   if (status === 'current') {
     return <Clock className="h-4 w-4 text-primary" />
   }
-  
+
   switch (stepId) {
     case 'requested':
       return <Mail className="h-4 w-4 text-muted-foreground" />
@@ -137,11 +149,14 @@ export function MyExchanges() {
             <TabsTrigger value="in-progress">진행 중</TabsTrigger>
             <TabsTrigger value="completed">완료</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="in-progress" className="mt-6">
             <div className="space-y-4">
-              {exchanges.inProgress.map((exchange) => (
-                <div key={exchange.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
+              {exchanges.inProgress.map(exchange => (
+                <div
+                  key={exchange.id}
+                  className="border rounded-lg p-4 hover:shadow-md transition-shadow"
+                >
                   <div className="flex gap-4">
                     <Image
                       src={exchange.book.coverUrl}
@@ -153,15 +168,19 @@ export function MyExchanges() {
                     <div className="flex-1 space-y-3">
                       <div className="flex items-start justify-between">
                         <div>
-                          <h4 className="font-semibold">{exchange.book.title}</h4>
-                          <p className="text-sm text-muted-foreground">{exchange.book.author}</p>
+                          <h4 className="font-semibold">
+                            {exchange.book.title}
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {exchange.book.author}
+                          </p>
                         </div>
                         <div className="flex items-center gap-2">
                           {getStatusBadge(exchange.status)}
                           <Badge variant="outline">{exchange.method}</Badge>
                         </div>
                       </div>
-                      
+
                       <div className="text-sm text-muted-foreground">
                         {exchange.type === 'requested' ? (
                           <>
@@ -175,26 +194,30 @@ export function MyExchanges() {
                           </>
                         )}
                       </div>
-                      
+
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
                           <span>진행률</span>
-                          <span className="font-medium">{exchange.progress}%</span>
+                          <span className="font-medium">
+                            {exchange.progress}%
+                          </span>
                         </div>
                         <div className="w-full bg-muted rounded-full h-2">
-                          <div 
+                          <div
                             className="bg-primary h-2 rounded-full transition-all duration-500"
                             style={{ width: `${exchange.progress}%` }}
                           />
                         </div>
                       </div>
-                      
+
                       {exchange.trackingNumber && (
                         <div className="bg-muted/50 rounded-lg p-3">
                           <div className="flex items-center justify-between">
                             <div>
                               <p className="text-sm font-medium">운송장 번호</p>
-                              <p className="text-sm text-muted-foreground">{exchange.trackingNumber}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {exchange.trackingNumber}
+                              </p>
                             </div>
                             <Button variant="outline" size="sm">
                               배송 조회
@@ -202,15 +225,18 @@ export function MyExchanges() {
                           </div>
                         </div>
                       )}
-                      
+
                       <div className="flex gap-2">
                         <Button size="sm">상세 보기</Button>
-                        {exchange.status === 'requested' && exchange.type === 'received' && (
-                          <>
-                            <Button size="sm">수락</Button>
-                            <Button variant="outline" size="sm">거절</Button>
-                          </>
-                        )}
+                        {exchange.status === 'requested' &&
+                          exchange.type === 'received' && (
+                            <>
+                              <Button size="sm">수락</Button>
+                              <Button variant="outline" size="sm">
+                                거절
+                              </Button>
+                            </>
+                          )}
                       </div>
                     </div>
                   </div>
@@ -218,11 +244,14 @@ export function MyExchanges() {
               ))}
             </div>
           </TabsContent>
-          
+
           <TabsContent value="completed" className="mt-6">
             <div className="space-y-4">
-              {exchanges.completed.map((exchange) => (
-                <div key={exchange.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
+              {exchanges.completed.map(exchange => (
+                <div
+                  key={exchange.id}
+                  className="border rounded-lg p-4 hover:shadow-md transition-shadow"
+                >
                   <div className="flex gap-4">
                     <Image
                       src={exchange.book.coverUrl}
@@ -234,31 +263,41 @@ export function MyExchanges() {
                     <div className="flex-1 space-y-3">
                       <div className="flex items-start justify-between">
                         <div>
-                          <h4 className="font-semibold">{exchange.book.title}</h4>
-                          <p className="text-sm text-muted-foreground">{exchange.book.author}</p>
+                          <h4 className="font-semibold">
+                            {exchange.book.title}
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {exchange.book.author}
+                          </p>
                         </div>
                         <div className="flex items-center gap-2">
                           {getStatusBadge(exchange.status)}
                           {exchange.rating && (
                             <div className="flex items-center gap-1">
                               <span className="text-yellow-500">★</span>
-                              <span className="text-sm font-medium">{exchange.rating}</span>
+                              <span className="text-sm font-medium">
+                                {exchange.rating}
+                              </span>
                             </div>
                           )}
                         </div>
                       </div>
-                      
+
                       <div className="text-sm text-muted-foreground">
                         {exchange.type === 'requested' ? '요청한' : '받은'} 교환
                       </div>
-                      
+
                       <div className="text-sm text-muted-foreground">
                         완료일: {formatRelativeTime(exchange.completedAt!)}
                       </div>
-                      
+
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline">리뷰 작성</Button>
-                        <Button size="sm" variant="outline">상세 보기</Button>
+                        <Button size="sm" variant="outline">
+                          리뷰 작성
+                        </Button>
+                        <Button size="sm" variant="outline">
+                          상세 보기
+                        </Button>
                       </div>
                     </div>
                   </div>

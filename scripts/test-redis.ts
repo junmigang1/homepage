@@ -39,7 +39,10 @@ redis.on('ready', async () => {
     const testValue = `test_${Date.now()}`
     await redis.set(testKey, testValue, 'EX', 10)
     const retrievedValue = await redis.get(testKey)
-    console.log('✅ SET/GET 테스트:', retrievedValue === testValue ? '성공' : '실패')
+    console.log(
+      '✅ SET/GET 테스트:',
+      retrievedValue === testValue ? '성공' : '실패'
+    )
 
     // 키 목록 확인
     const keys = await redis.keys('*')
@@ -50,7 +53,11 @@ redis.on('ready', async () => {
 
     // Redis 정보
     const info = await redis.info('server')
-    const version = info.split('\n').find(line => line.startsWith('redis_version:'))?.split(':')[1]?.trim()
+    const version = info
+      .split('\n')
+      .find(line => line.startsWith('redis_version:'))
+      ?.split(':')[1]
+      ?.trim()
     console.log('✅ Redis 버전:', version || 'unknown')
 
     // 특정 키 패턴 확인
@@ -61,7 +68,7 @@ redis.on('ready', async () => {
 
     console.log('')
     console.log('🎉 모든 테스트 통과! Redis 연결이 정상적으로 작동합니다.')
-    
+
     await redis.quit()
     process.exit(0)
   } catch (error: any) {
@@ -71,13 +78,15 @@ redis.on('ready', async () => {
   }
 })
 
-redis.on('error', (error) => {
+redis.on('error', error => {
   console.error('❌ Redis 연결 오류:', error.message)
   console.error('')
   console.error('🔧 문제 해결 방법:')
   console.error('1. Redis 서버가 실행 중인지 확인하세요')
   console.error('2. REDIS_URL 환경 변수를 확인하세요 (현재:', redisUrl, ')')
-  console.error('3. Redis 포트가 올바른지 확인하세요 (기본: 6379, 현재 설정: 3001)')
+  console.error(
+    '3. Redis 포트가 올바른지 확인하세요 (기본: 6379, 현재 설정: 3001)'
+  )
   console.error('4. 방화벽 설정을 확인하세요')
   process.exit(1)
 })
@@ -96,4 +105,3 @@ setTimeout(() => {
   redis.quit()
   process.exit(1)
 }, 10000)
-

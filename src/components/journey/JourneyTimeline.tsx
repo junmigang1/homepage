@@ -15,7 +15,8 @@ const timelineEvents = [
     date: '2024-01-01T10:00:00Z',
     user: {
       name: '문학청년',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face',
+      avatar:
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face',
       school: '고려대학교',
     },
     content: '책의 여정이 시작되었습니다! 정말 기대되네요.',
@@ -29,10 +30,12 @@ const timelineEvents = [
     date: '2024-01-05T15:30:00Z',
     user: {
       name: '책벌레영희',
-      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face',
+      avatar:
+        'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face',
       school: '연세대학교',
     },
-    content: '놀라운 통찰력이 담긴 책이네요. 인류의 역사를 완전히 다른 관점에서 바라보게 되었습니다. 특히 농업혁명 부분이 정말 충격적이었어요.',
+    content:
+      '놀라운 통찰력이 담긴 책이네요. 인류의 역사를 완전히 다른 관점에서 바라보게 되었습니다. 특히 농업혁명 부분이 정말 충격적이었어요.',
     emotion: '놀라움',
     location: '서울 마포구',
     rating: 5,
@@ -44,10 +47,12 @@ const timelineEvents = [
     date: '2024-01-10T14:20:00Z',
     user: {
       name: '공부러버',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face',
+      avatar:
+        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face',
       school: '성균관대학교',
     },
-    content: '책을 받았습니다! 공부에 대한 새로운 관점을 얻을 수 있을 것 같아요.',
+    content:
+      '책을 받았습니다! 공부에 대한 새로운 관점을 얻을 수 있을 것 같아요.',
     emotion: '영감',
     location: '서울 서초구',
     reactions: { heart: 15, message: 5, share: 2 },
@@ -58,10 +63,12 @@ const timelineEvents = [
     date: '2024-01-15T09:45:00Z',
     user: {
       name: '독서왕김철수',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face',
+      avatar:
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face',
       school: '서울대학교',
     },
-    content: '정말 인상깊은 책이었어요. 인류의 역사를 새롭게 바라보게 되었습니다. 다음 독자분께서도 좋은 시간 되시길 바라요!',
+    content:
+      '정말 인상깊은 책이었어요. 인류의 역사를 새롭게 바라보게 되었습니다. 다음 독자분께서도 좋은 시간 되시길 바라요!',
     emotion: '감동',
     location: '서울 강남구',
     rating: 5,
@@ -102,12 +109,15 @@ export function JourneyTimeline({ bookId }: { bookId: string }) {
               {index < timelineEvents.length - 1 && (
                 <div className="absolute left-6 top-12 w-0.5 h-16 bg-muted"></div>
               )}
-              
+
               <div className="flex gap-4">
                 {/* 아바타 */}
                 <div className="relative">
                   <Avatar className="w-12 h-12 border-2 border-background shadow-md">
-                    <AvatarImage src={event.user.avatar} alt={event.user.name} />
+                    <AvatarImage
+                      src={event.user.avatar}
+                      alt={event.user.name}
+                    />
                     <AvatarFallback>{event.user.name[0]}</AvatarFallback>
                   </Avatar>
                   <div className="absolute -top-1 -right-1 text-lg">
@@ -124,8 +134,8 @@ export function JourneyTimeline({ bookId }: { bookId: string }) {
                       <Badge variant="outline" className="text-xs">
                         {event.user.school}
                       </Badge>
-                      <Badge 
-                        variant="outline" 
+                      <Badge
+                        variant="outline"
                         className={`text-xs ${emotionColors[event.emotion as keyof typeof emotionColors]}`}
                       >
                         {event.emotion}
@@ -133,7 +143,9 @@ export function JourneyTimeline({ bookId }: { bookId: string }) {
                       {event.rating && (
                         <div className="flex items-center gap-1">
                           <span className="text-yellow-500">★</span>
-                          <span className="text-sm font-medium">{event.rating}</span>
+                          <span className="text-sm font-medium">
+                            {event.rating}
+                          </span>
                         </div>
                       )}
                     </div>

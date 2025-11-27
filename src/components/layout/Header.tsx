@@ -31,7 +31,7 @@ export function Header() {
 
         {/* 데스크톱 네비게이션 */}
         <nav className="hidden md:flex items-center space-x-6">
-          {navigation.map((item) => (
+          {navigation.map(item => (
             <Link
               key={item.name}
               href={item.href}

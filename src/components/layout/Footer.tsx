@@ -46,7 +46,7 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="text-sm font-semibold">서비스</h3>
             <ul className="space-y-2">
-              {footerLinks.about.map((link) => (
+              {footerLinks.about.map(link => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
@@ -62,7 +62,7 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="text-sm font-semibold">고객지원</h3>
             <ul className="space-y-2">
-              {footerLinks.support.map((link) => (
+              {footerLinks.support.map(link => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
@@ -78,7 +78,7 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="text-sm font-semibold">법적 고지</h3>
             <ul className="space-y-2">
-              {footerLinks.legal.map((link) => (
+              {footerLinks.legal.map(link => (
                 <li key={link.name}>
                   <Link
                     href={link.href}

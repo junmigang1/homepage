@@ -49,32 +49,41 @@ export function ReadingStats() {
             </Badge>
           </div>
           <div className="w-full bg-muted rounded-full h-3 mb-2">
-            <div 
+            <div
               className="bg-primary h-3 rounded-full transition-all duration-500"
               style={{ width: `${goalProgress}%` }}
             />
           </div>
           <p className="text-sm text-muted-foreground">
-            {readingStats.monthlyGoal - readingStats.booksRead}권 더 읽으면 목표 달성!
+            {readingStats.monthlyGoal - readingStats.booksRead}권 더 읽으면 목표
+            달성!
           </p>
         </div>
 
         {/* 독서 통계 */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">{readingStats.booksRead}</div>
+            <div className="text-2xl font-bold text-primary">
+              {readingStats.booksRead}
+            </div>
             <div className="text-sm text-muted-foreground">이번 달 읽은 책</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">{readingStats.pagesRead.toLocaleString()}</div>
+            <div className="text-2xl font-bold text-primary">
+              {readingStats.pagesRead.toLocaleString()}
+            </div>
             <div className="text-sm text-muted-foreground">읽은 페이지</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">{readingStats.readingTime}</div>
+            <div className="text-2xl font-bold text-primary">
+              {readingStats.readingTime}
+            </div>
             <div className="text-sm text-muted-foreground">독서 시간(시간)</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">{readingStats.readingStreak}</div>
+            <div className="text-2xl font-bold text-primary">
+              {readingStats.readingStreak}
+            </div>
             <div className="text-sm text-muted-foreground">연속 독서일</div>
           </div>
         </div>
@@ -88,14 +97,16 @@ export function ReadingStats() {
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium">{genre.name}</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">{genre.count}권</span>
+                    <span className="text-sm text-muted-foreground">
+                      {genre.count}권
+                    </span>
                     <Badge variant="outline" className="text-xs">
                       {genre.percentage}%
                     </Badge>
                   </div>
                 </div>
                 <div className="w-full bg-muted rounded-full h-2">
-                  <div 
+                  <div
                     className="bg-primary h-2 rounded-full transition-all duration-500"
                     style={{ width: `${genre.percentage}%` }}
                   />
@@ -110,21 +121,30 @@ export function ReadingStats() {
           <h4 className="font-semibold mb-4">월별 독서 현황</h4>
           <div className="space-y-3">
             {readingStats.monthlyProgress.map((month, index) => (
-              <div key={month.month} className="flex items-center justify-between p-3 rounded-lg border">
+              <div
+                key={month.month}
+                className="flex items-center justify-between p-3 rounded-lg border"
+              >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                     <Calendar className="h-4 w-4 text-primary" />
                   </div>
                   <div>
                     <div className="font-medium text-sm">{month.month}</div>
-                    <div className="text-xs text-muted-foreground">{month.pages}페이지</div>
+                    <div className="text-xs text-muted-foreground">
+                      {month.pages}페이지
+                    </div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-lg font-bold text-primary">{month.books}권</div>
+                  <div className="text-lg font-bold text-primary">
+                    {month.books}권
+                  </div>
                   <div className="flex items-center gap-1">
                     <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                    <span className="text-xs text-muted-foreground">{readingStats.averageRating}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {readingStats.averageRating}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -137,10 +157,14 @@ export function ReadingStats() {
           <div className="flex items-center justify-between">
             <div>
               <h4 className="font-semibold">리뷰 작성</h4>
-              <p className="text-sm text-muted-foreground">총 {readingStats.totalReviews}개의 리뷰 작성</p>
+              <p className="text-sm text-muted-foreground">
+                총 {readingStats.totalReviews}개의 리뷰 작성
+              </p>
             </div>
             <div className="text-right">
-              <div className="text-2xl font-bold text-primary">{readingStats.averageRating}</div>
+              <div className="text-2xl font-bold text-primary">
+                {readingStats.averageRating}
+              </div>
               <div className="text-sm text-muted-foreground">평균 평점</div>
             </div>
           </div>

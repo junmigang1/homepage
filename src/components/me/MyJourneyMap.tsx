@@ -11,7 +11,8 @@ const myJourneys = [
     book: {
       title: '사피엔스',
       author: '유발 하라리',
-      coverUrl: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=60&h=90&fit=crop',
+      coverUrl:
+        'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=60&h=90&fit=crop',
     },
     type: 'sent', // 'sent' | 'received'
     status: 'completed',
@@ -24,7 +25,8 @@ const myJourneys = [
     book: {
       title: '1984',
       author: '조지 오웰',
-      coverUrl: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=60&h=90&fit=crop',
+      coverUrl:
+        'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=60&h=90&fit=crop',
     },
     type: 'received',
     status: 'completed',
@@ -37,7 +39,8 @@ const myJourneys = [
     book: {
       title: '아몬드',
       author: '손원평',
-      coverUrl: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=60&h=90&fit=crop',
+      coverUrl:
+        'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=60&h=90&fit=crop',
     },
     type: 'sent',
     status: 'in_progress',
@@ -81,20 +84,22 @@ export function MyJourneyMap() {
               key={journey.id}
               className="absolute transform -translate-x-1/2 -translate-y-1/2"
               style={{
-                left: `${20 + (index * 25)}%`,
+                left: `${20 + index * 25}%`,
                 top: `${30 + (index % 2) * 30}%`,
               }}
             >
-              <div className={`w-6 h-6 rounded-full border-2 ${
-                journey.status === 'completed' 
-                  ? 'bg-green-500 border-green-500' 
-                  : 'bg-yellow-500 border-yellow-500'
-              } shadow-lg`}>
+              <div
+                className={`w-6 h-6 rounded-full border-2 ${
+                  journey.status === 'completed'
+                    ? 'bg-green-500 border-green-500'
+                    : 'bg-yellow-500 border-yellow-500'
+                } shadow-lg`}
+              >
                 {journey.status === 'in_progress' && (
                   <div className="w-full h-full rounded-full bg-white animate-ping"></div>
                 )}
               </div>
-              
+
               {/* 노드 라벨 */}
               <div className="absolute top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
                 <div className="bg-white rounded-lg px-2 py-1 shadow-md text-xs">
@@ -110,9 +115,9 @@ export function MyJourneyMap() {
             {myJourneys.slice(0, -1).map((_, index) => (
               <line
                 key={index}
-                x1={`${20 + (index * 25)}%`}
+                x1={`${20 + index * 25}%`}
                 y1={`${30 + (index % 2) * 30}%`}
-                x2={`${20 + ((index + 1) * 25)}%`}
+                x2={`${20 + (index + 1) * 25}%`}
                 y2={`${30 + ((index + 1) % 2) * 30}%`}
                 stroke="#4A7043"
                 strokeWidth="2"
@@ -137,19 +142,27 @@ export function MyJourneyMap() {
         {/* 여정 통계 */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">{journeyStats.totalBooks}</div>
+            <div className="text-2xl font-bold text-primary">
+              {journeyStats.totalBooks}
+            </div>
             <div className="text-sm text-muted-foreground">총 교환</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">{journeyStats.sentBooks}</div>
+            <div className="text-2xl font-bold text-primary">
+              {journeyStats.sentBooks}
+            </div>
             <div className="text-sm text-muted-foreground">보낸 책</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">{journeyStats.receivedBooks}</div>
+            <div className="text-2xl font-bold text-primary">
+              {journeyStats.receivedBooks}
+            </div>
             <div className="text-sm text-muted-foreground">받은 책</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">{journeyStats.totalDistance}km</div>
+            <div className="text-2xl font-bold text-primary">
+              {journeyStats.totalDistance}km
+            </div>
             <div className="text-sm text-muted-foreground">총 거리</div>
           </div>
         </div>
@@ -157,7 +170,7 @@ export function MyJourneyMap() {
         {/* 최근 여정 */}
         <div className="space-y-3">
           <h4 className="font-semibold">최근 여정</h4>
-          {myJourneys.map((journey) => (
+          {myJourneys.map(journey => (
             <div
               key={journey.id}
               className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted/30 transition-colors"
@@ -168,22 +181,30 @@ export function MyJourneyMap() {
                   alt={journey.book.title}
                   className="w-12 h-16 rounded-lg shadow-sm object-cover"
                 />
-                <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full ${
-                  journey.status === 'completed' ? 'bg-green-500' : 'bg-yellow-500'
-                }`} />
+                <div
+                  className={`absolute -top-1 -right-1 w-4 h-4 rounded-full ${
+                    journey.status === 'completed'
+                      ? 'bg-green-500'
+                      : 'bg-yellow-500'
+                  }`}
+                />
               </div>
-              
+
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <h5 className="font-medium text-sm">{journey.book.title}</h5>
-                  <Badge 
-                    variant={journey.status === 'completed' ? 'default' : 'secondary'}
+                  <Badge
+                    variant={
+                      journey.status === 'completed' ? 'default' : 'secondary'
+                    }
                     className="text-xs"
                   >
                     {journey.status === 'completed' ? '완료' : '진행중'}
                   </Badge>
                 </div>
-                <p className="text-xs text-muted-foreground">{journey.book.author}</p>
+                <p className="text-xs text-muted-foreground">
+                  {journey.book.author}
+                </p>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
                   <MapPin className="h-3 w-3" />
                   <span>{journey.location}</span>
@@ -209,7 +230,7 @@ export function MyJourneyMap() {
         <div className="mt-6">
           <h4 className="font-semibold mb-3">방문한 도시</h4>
           <div className="flex flex-wrap gap-2">
-            {journeyStats.cities.map((city) => (
+            {journeyStats.cities.map(city => (
               <Badge key={city} variant="outline" className="text-sm">
                 <MapPin className="h-3 w-3 mr-1" />
                 {city}

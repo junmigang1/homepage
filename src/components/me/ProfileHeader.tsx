@@ -10,7 +10,8 @@ import { Edit, Settings, Share2, MapPin, BookOpen, Trophy } from 'lucide-react'
 const userProfile = {
   name: '독서왕김철수',
   email: 'booklover@example.com',
-  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
+  avatar:
+    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
   school: '서울대학교',
   isVerified: true,
   bio: '책과 함께하는 삶을 살고 있습니다. 특히 인문학과 소설을 좋아해요.',
@@ -40,16 +41,20 @@ export function ProfileHeader() {
             <div className="relative">
               <Avatar className="w-24 h-24 border-4 border-background shadow-lg">
                 <AvatarImage src={userProfile.avatar} alt={userProfile.name} />
-                <AvatarFallback className="text-2xl">{userProfile.name[0]}</AvatarFallback>
+                <AvatarFallback className="text-2xl">
+                  {userProfile.name[0]}
+                </AvatarFallback>
               </Avatar>
               <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                 <Trophy className="h-4 w-4 text-white" />
               </div>
             </div>
-            
+
             <div className="text-center md:text-left mt-4">
               <div className="flex items-center gap-2 mb-2">
-                <h1 className="text-2xl font-bold text-primary">{userProfile.name}</h1>
+                <h1 className="text-2xl font-bold text-primary">
+                  {userProfile.name}
+                </h1>
                 {userProfile.isVerified && (
                   <Badge variant="default" className="text-xs">
                     인증
@@ -79,9 +84,9 @@ export function ProfileHeader() {
               <h3 className="font-semibold mb-2">뱃지</h3>
               <div className="flex flex-wrap gap-2">
                 {userProfile.badges.map((badge, index) => (
-                  <Badge 
-                    key={index} 
-                    variant="outline" 
+                  <Badge
+                    key={index}
+                    variant="outline"
                     className={`${badge.color} border-0`}
                   >
                     {badge.icon} {badge.name}
@@ -93,19 +98,27 @@ export function ProfileHeader() {
             {/* 통계 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{userProfile.stats.booksRead}</div>
+                <div className="text-2xl font-bold text-primary">
+                  {userProfile.stats.booksRead}
+                </div>
                 <div className="text-sm text-muted-foreground">읽은 책</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{userProfile.stats.booksShared}</div>
+                <div className="text-2xl font-bold text-primary">
+                  {userProfile.stats.booksShared}
+                </div>
                 <div className="text-sm text-muted-foreground">공유한 책</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{userProfile.stats.reviewsWritten}</div>
+                <div className="text-2xl font-bold text-primary">
+                  {userProfile.stats.reviewsWritten}
+                </div>
                 <div className="text-sm text-muted-foreground">작성한 리뷰</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{userProfile.stats.points.toLocaleString()}</div>
+                <div className="text-2xl font-bold text-primary">
+                  {userProfile.stats.points.toLocaleString()}
+                </div>
                 <div className="text-sm text-muted-foreground">포인트</div>
               </div>
             </div>
@@ -115,10 +128,14 @@ export function ProfileHeader() {
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="font-semibold text-primary">전체 순위</h4>
-                  <p className="text-sm text-muted-foreground">이번 달 활성도 기준</p>
+                  <p className="text-sm text-muted-foreground">
+                    이번 달 활성도 기준
+                  </p>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-bold text-primary">#{userProfile.stats.rank}</div>
+                  <div className="text-3xl font-bold text-primary">
+                    #{userProfile.stats.rank}
+                  </div>
                   <div className="text-sm text-muted-foreground">위</div>
                 </div>
               </div>
@@ -127,15 +144,27 @@ export function ProfileHeader() {
 
           {/* 액션 버튼들 */}
           <div className="flex flex-col gap-2">
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2"
+            >
               <Edit className="h-4 w-4" />
               프로필 수정
             </Button>
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2"
+            >
               <Settings className="h-4 w-4" />
               설정
             </Button>
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2"
+            >
               <Share2 className="h-4 w-4" />
               공유
             </Button>

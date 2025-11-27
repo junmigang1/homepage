@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getRedisClient } from '@/lib/redis'
 import { getCurrentUserId } from '@/lib/auth'
+import { Book } from '@/types'
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,10 +14,10 @@ export async function GET(request: NextRequest) {
     const redis = getRedisClient()
     const keys = await redis.keys('book:*')
     const books = await Promise.all(
-      keys.map(async key => JSON.parse((await redis.get(key)) || '{}'))
+      keys.map(async key => JSON.parse((await redis.get(key)) || '{}') as Book)
     )
 
-    let filteredBooks = [...books]
+    let filteredBooks: Book[] = [...books]
 
     if (genre && genre !== '전체') {
       filteredBooks = filteredBooks.filter(book => book.genre === genre)
@@ -56,7 +57,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { title, author, coverUrl, condition, genre } = body
 
-    const newBook = {
+    const newBook: Book = {
       id: String(Date.now()),
       title,
       author,
@@ -67,8 +68,7 @@ export async function POST(request: NextRequest) {
       genre,
       ownerId: userId,
       isExchangeable: true,
-      reviews: [],
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
     }
 
     const redis = getRedisClient()

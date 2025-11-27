@@ -6,7 +6,7 @@ export function getRedisClient(): Redis {
   if (redis) return redis
 
   const redisUrl = process.env.REDIS_URL || 'redis://localhost:3001'
-  
+
   redis = new Redis(redisUrl, {
     retryStrategy: (times: number) => {
       if (times > 3) {
@@ -31,7 +31,7 @@ export function getRedisClient(): Redis {
     console.log('✅ Redis 준비 완료')
   })
 
-  redis.on('error', (error) => {
+  redis.on('error', error => {
     console.error('❌ Redis 연결 오류:', error.message)
   })
 
@@ -53,7 +53,7 @@ export async function closeRedisConnection() {
   }
 }
 
-export async function getMoviesFromRedis() {
+export async function getBooksFromRedis() {
   const data = await getRedisClient().get('mocksBooks')
   return data ? JSON.parse(data) : null
 }

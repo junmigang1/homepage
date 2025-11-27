@@ -101,8 +101,8 @@ export default function JourneyListPage() {
       setRoom(data)
       setRoomId(data.id)
       setJoinRoomId('')
-    } catch (err: any) {
-      setError(err.message || '방 입장에 실패했습니다.')
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : '방 입장에 실패했습니다.')
     } finally {
       setLoading(false)
     }
@@ -125,8 +125,10 @@ export default function JourneyListPage() {
       }
 
       setRoom(data)
-    } catch (err: any) {
-      setError(err.message || '방 상태 조회에 실패했습니다.')
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error ? err.message : '방 상태 조회에 실패했습니다.'
+      )
     } finally {
       setLoading(false)
     }

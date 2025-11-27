@@ -113,18 +113,24 @@ export function BadgesPanel() {
         <CardContent>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-primary">{stats.earnedBadges}</div>
+              <div className="text-2xl font-bold text-primary">
+                {stats.earnedBadges}
+              </div>
               <div className="text-sm text-muted-foreground">획득한 뱃지</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-primary">{stats.totalBadges}</div>
+              <div className="text-2xl font-bold text-primary">
+                {stats.totalBadges}
+              </div>
               <div className="text-sm text-muted-foreground">전체 뱃지</div>
             </div>
           </div>
           <div className="w-full bg-muted rounded-full h-2">
-            <div 
+            <div
               className="bg-primary h-2 rounded-full transition-all duration-500"
-              style={{ width: `${(stats.earnedBadges / stats.totalBadges) * 100}%` }}
+              style={{
+                width: `${(stats.earnedBadges / stats.totalBadges) * 100}%`,
+              }}
             />
           </div>
         </CardContent>
@@ -142,13 +148,19 @@ export function BadgesPanel() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">보유 포인트</span>
-              <span className="text-lg font-bold text-accent">{stats.totalPoints.toLocaleString()}</span>
+              <span className="text-lg font-bold text-accent">
+                {stats.totalPoints.toLocaleString()}
+              </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">전체 순위</span>
               <div className="flex items-center gap-2">
-                <span className="text-lg font-bold text-primary">#{stats.rank}</span>
-                <Badge variant="default" className="text-xs">위</Badge>
+                <span className="text-lg font-bold text-primary">
+                  #{stats.rank}
+                </span>
+                <Badge variant="default" className="text-xs">
+                  위
+                </Badge>
               </div>
             </div>
           </div>
@@ -165,7 +177,7 @@ export function BadgesPanel() {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {earnedBadges.map((badge) => (
+            {earnedBadges.map(badge => (
               <div
                 key={badge.id}
                 className="flex items-center gap-3 p-3 rounded-lg bg-muted/30 border"
@@ -174,14 +186,16 @@ export function BadgesPanel() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-medium text-sm">{badge.title}</span>
-                    <Badge 
-                      variant="outline" 
+                    <Badge
+                      variant="outline"
                       className={`text-xs ${rarityColors[badge.rarity as keyof typeof rarityColors]}`}
                     >
                       {rarityIcons[badge.rarity as keyof typeof rarityIcons]}
                     </Badge>
                   </div>
-                  <p className="text-xs text-muted-foreground">{badge.description}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {badge.description}
+                  </p>
                   <p className="text-xs text-muted-foreground mt-1">
                     획득일: {badge.earnedAt}
                   </p>
@@ -202,9 +216,9 @@ export function BadgesPanel() {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {unearnedBadges.map((badge) => {
+            {unearnedBadges.map(badge => {
               const progress = (badge.progress / badge.target) * 100
-              
+
               return (
                 <div
                   key={badge.id}
@@ -213,22 +227,28 @@ export function BadgesPanel() {
                   <div className="text-2xl opacity-50">{badge.icon}</div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-sm text-muted-foreground">{badge.title}</span>
-                      <Badge 
-                        variant="outline" 
+                      <span className="font-medium text-sm text-muted-foreground">
+                        {badge.title}
+                      </span>
+                      <Badge
+                        variant="outline"
                         className={`text-xs opacity-50 ${rarityColors[badge.rarity as keyof typeof rarityColors]}`}
                       >
                         {rarityIcons[badge.rarity as keyof typeof rarityIcons]}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground mb-2">{badge.description}</p>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      {badge.description}
+                    </p>
                     <div className="space-y-1">
                       <div className="flex justify-between text-xs text-muted-foreground">
                         <span>진행률</span>
-                        <span>{badge.progress}/{badge.target}</span>
+                        <span>
+                          {badge.progress}/{badge.target}
+                        </span>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
-                        <div 
+                        <div
                           className="bg-accent h-2 rounded-full transition-all duration-500"
                           style={{ width: `${progress}%` }}
                         />

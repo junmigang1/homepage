@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
         // 기존 유저 확인 (이메일로 검색)
         const keys = await redis.keys('user:*')
         let existingUser = null
-        let userId: string
+        let userId: string = ''
 
         for (const key of keys) {
           const userData = JSON.parse((await redis.get(key)) || '{}')

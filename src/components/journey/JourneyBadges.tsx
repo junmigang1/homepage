@@ -96,7 +96,7 @@ export function JourneyBadges({ bookId }: { bookId: string }) {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {earnedBadges.map((badge) => {
+            {earnedBadges.map(badge => {
               const Icon = badge.icon
               return (
                 <div
@@ -114,14 +114,16 @@ export function JourneyBadges({ bookId }: { bookId: string }) {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-medium text-sm">{badge.title}</span>
-                      <Badge 
-                        variant="outline" 
+                      <Badge
+                        variant="outline"
                         className={`text-xs ${rarityColors[badge.rarity as keyof typeof rarityColors]}`}
                       >
                         {badge.rarity}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground">{badge.description}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {badge.description}
+                    </p>
                     <p className="text-xs text-muted-foreground mt-1">
                       획득일: {badge.earnedAt}
                     </p>
@@ -143,10 +145,10 @@ export function JourneyBadges({ bookId }: { bookId: string }) {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {unearnedBadges.map((badge) => {
+            {unearnedBadges.map(badge => {
               const Icon = badge.icon
-              const progress = badge.progress! / badge.target! * 100
-              
+              const progress = (badge.progress! / badge.target!) * 100
+
               return (
                 <div
                   key={badge.id}
@@ -162,22 +164,28 @@ export function JourneyBadges({ bookId }: { bookId: string }) {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-sm text-muted-foreground">{badge.title}</span>
-                      <Badge 
-                        variant="outline" 
+                      <span className="font-medium text-sm text-muted-foreground">
+                        {badge.title}
+                      </span>
+                      <Badge
+                        variant="outline"
                         className={`text-xs opacity-50 ${rarityColors[badge.rarity as keyof typeof rarityColors]}`}
                       >
                         {badge.rarity}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground mb-2">{badge.description}</p>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      {badge.description}
+                    </p>
                     <div className="space-y-1">
                       <div className="flex justify-between text-xs text-muted-foreground">
                         <span>진행률</span>
-                        <span>{badge.progress}/{badge.target}</span>
+                        <span>
+                          {badge.progress}/{badge.target}
+                        </span>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
-                        <div 
+                        <div
                           className="bg-accent h-2 rounded-full transition-all duration-500"
                           style={{ width: `${progress}%` }}
                         />
@@ -199,11 +207,15 @@ export function JourneyBadges({ bookId }: { bookId: string }) {
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-primary">{earnedBadges.length}</div>
+              <div className="text-2xl font-bold text-primary">
+                {earnedBadges.length}
+              </div>
               <div className="text-sm text-muted-foreground">획득한 뱃지</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-primary">{badges.length}</div>
+              <div className="text-2xl font-bold text-primary">
+                {badges.length}
+              </div>
               <div className="text-sm text-muted-foreground">전체 뱃지</div>
             </div>
           </div>

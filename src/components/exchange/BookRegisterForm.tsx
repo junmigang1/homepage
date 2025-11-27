@@ -10,7 +10,18 @@ import { useRouter } from 'next/navigation'
 
 const conditions = ['새책', '양호', '보통', '나쁨']
 const exchangeMethods = ['택배', '보관함']
-const genres = ['소설', '에세이', '자기계발', '인문학', '경제', '과학', '역사', '철학', '예술', '기타']
+const genres = [
+  '소설',
+  '에세이',
+  '자기계발',
+  '인문학',
+  '경제',
+  '과학',
+  '역사',
+  '철학',
+  '예술',
+  '기타',
+]
 
 export function BookRegisterForm() {
   const [formData, setFormData] = useState({
@@ -36,7 +47,7 @@ export function BookRegisterForm() {
       setFormData(prev => ({
         ...prev,
         coverFile: file,
-        coverPreview: URL.createObjectURL(file)
+        coverPreview: URL.createObjectURL(file),
       }))
     }
   }
@@ -45,7 +56,7 @@ export function BookRegisterForm() {
     setFormData(prev => ({
       ...prev,
       coverFile: null,
-      coverPreview: ''
+      coverPreview: '',
     }))
   }
 
@@ -54,7 +65,12 @@ export function BookRegisterForm() {
     setIsSubmitting(true)
 
     // 폼 검증
-    if (!formData.title || !formData.author || !formData.condition || !formData.exchangeMethod) {
+    if (
+      !formData.title ||
+      !formData.author ||
+      !formData.condition ||
+      !formData.exchangeMethod
+    ) {
       toast.error('필수 항목을 모두 입력해주세요.')
       setIsSubmitting(false)
       return
@@ -62,8 +78,10 @@ export function BookRegisterForm() {
 
     try {
       // 이미지 URL 처리 (파일이 있으면 임시로 preview URL 사용, 없으면 기본 이미지)
-      let coverUrl = formData.coverPreview || 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=200'
-      
+      let coverUrl =
+        formData.coverPreview ||
+        'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=200'
+
       // API 호출
       const response = await fetch('/api/books', {
         method: 'POST',
@@ -87,14 +105,14 @@ export function BookRegisterForm() {
       }
 
       const newBook = await response.json()
-      
+
       toast.success('책이 여정에 올라탔어요! 📖', {
         duration: 4000,
       })
-      
+
       // 성공 후 여정 페이지로 이동
       router.push(`/journey/${newBook.id}`)
-      
+
       // 폼 초기화
       setFormData({
         title: '',
@@ -117,7 +135,9 @@ export function BookRegisterForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-2xl text-center">새로운 책 등록하기</CardTitle>
+        <CardTitle className="text-2xl text-center">
+          새로운 책 등록하기
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -161,7 +181,9 @@ export function BookRegisterForm() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => document.getElementById('cover-upload')?.click()}
+                    onClick={() =>
+                      document.getElementById('cover-upload')?.click()
+                    }
                     className="mt-4"
                   >
                     파일 선택
@@ -178,7 +200,7 @@ export function BookRegisterForm() {
               <input
                 type="text"
                 value={formData.title}
-                onChange={(e) => handleInputChange('title', e.target.value)}
+                onChange={e => handleInputChange('title', e.target.value)}
                 className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                 placeholder="책 제목을 입력하세요"
               />
@@ -188,7 +210,7 @@ export function BookRegisterForm() {
               <input
                 type="text"
                 value={formData.author}
-                onChange={(e) => handleInputChange('author', e.target.value)}
+                onChange={e => handleInputChange('author', e.target.value)}
                 className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                 placeholder="저자명을 입력하세요"
               />
@@ -200,12 +222,14 @@ export function BookRegisterForm() {
               <label className="text-sm font-medium">장르</label>
               <select
                 value={formData.genre}
-                onChange={(e) => handleInputChange('genre', e.target.value)}
+                onChange={e => handleInputChange('genre', e.target.value)}
                 className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
               >
                 <option value="">장르를 선택하세요</option>
                 {genres.map(genre => (
-                  <option key={genre} value={genre}>{genre}</option>
+                  <option key={genre} value={genre}>
+                    {genre}
+                  </option>
                 ))}
               </select>
             </div>
@@ -215,7 +239,9 @@ export function BookRegisterForm() {
                 {conditions.map(condition => (
                   <Badge
                     key={condition}
-                    variant={formData.condition === condition ? 'default' : 'outline'}
+                    variant={
+                      formData.condition === condition ? 'default' : 'outline'
+                    }
                     className="cursor-pointer hover:bg-primary/10"
                     onClick={() => handleInputChange('condition', condition)}
                   >
@@ -231,13 +257,18 @@ export function BookRegisterForm() {
             <label className="text-sm font-medium">교환 방식 *</label>
             <div className="flex gap-4">
               {exchangeMethods.map(method => (
-                <label key={method} className="flex items-center space-x-2 cursor-pointer">
+                <label
+                  key={method}
+                  className="flex items-center space-x-2 cursor-pointer"
+                >
                   <input
                     type="radio"
                     name="exchangeMethod"
                     value={method}
                     checked={formData.exchangeMethod === method}
-                    onChange={(e) => handleInputChange('exchangeMethod', e.target.value)}
+                    onChange={e =>
+                      handleInputChange('exchangeMethod', e.target.value)
+                    }
                     className="text-primary focus:ring-primary"
                   />
                   <span className="text-sm">{method}</span>
@@ -248,10 +279,12 @@ export function BookRegisterForm() {
 
           {/* 다음 독자에게 남길 메시지 */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">다음 독자에게 남길 메시지</label>
+            <label className="text-sm font-medium">
+              다음 독자에게 남길 메시지
+            </label>
             <textarea
               value={formData.message}
-              onChange={(e) => handleInputChange('message', e.target.value)}
+              onChange={e => handleInputChange('message', e.target.value)}
               className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
               rows={4}
               placeholder="이 책에 대한 감상이나 다음 독자에게 전하고 싶은 말을 남겨주세요..."
@@ -273,8 +306,7 @@ export function BookRegisterForm() {
                 </>
               ) : (
                 <>
-                  <Check className="mr-2 h-4 w-4" />
-                  책 등록하기
+                  <Check className="mr-2 h-4 w-4" />책 등록하기
                 </>
               )}
             </Button>

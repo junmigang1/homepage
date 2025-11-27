@@ -14,4 +14,3 @@
   - `.eslintrc.json` - ESLint 설정
   - `.prettierrc` - Prettier 설정
   - `.lintstagedrc.json` - lint-staged 설정
-

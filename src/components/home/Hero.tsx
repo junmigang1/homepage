@@ -15,10 +15,10 @@ export function Hero() {
             <br />
             새로운 이야기를 만납니다
           </h1>
-          
+
           {/* 서브 텍스트 */}
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            교환독서로 책의 여정을 함께하고, 
+            교환독서로 책의 여정을 함께하고,
             <br className="hidden md:block" />
             새로운 독자들과 소통해보세요
           </p>
@@ -31,10 +31,13 @@ export function Hero() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-6" asChild>
-              <Link href="/exchange?tab=browse">
-                책 둘러보기
-              </Link>
+            <Button
+              variant="outline"
+              size="lg"
+              className="text-lg px-8 py-6"
+              asChild
+            >
+              <Link href="/exchange?tab=browse">책 둘러보기</Link>
             </Button>
           </div>
 
@@ -62,8 +65,14 @@ export function Hero() {
       {/* 배경 장식 */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-20 left-10 w-20 h-20 bg-primary/10 rounded-full animate-bounce-gentle"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-accent/10 rounded-full animate-bounce-gentle" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-secondary/20 rounded-full animate-bounce-gentle" style={{ animationDelay: '2s' }}></div>
+        <div
+          className="absolute top-40 right-20 w-16 h-16 bg-accent/10 rounded-full animate-bounce-gentle"
+          style={{ animationDelay: '1s' }}
+        ></div>
+        <div
+          className="absolute bottom-20 left-1/4 w-12 h-12 bg-secondary/20 rounded-full animate-bounce-gentle"
+          style={{ animationDelay: '2s' }}
+        ></div>
       </div>
     </section>
   )

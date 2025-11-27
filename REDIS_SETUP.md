@@ -3,6 +3,7 @@
 ## 🔍 현재 상태
 
 Redis 연결 테스트 결과:
+
 - ❌ Redis 서버가 실행되지 않고 있습니다
 - 현재 설정된 URL: `redis://localhost:3001`
 - 기본 Redis 포트: `6379`
@@ -12,6 +13,7 @@ Redis 연결 테스트 결과:
 ### Windows
 
 #### 방법 1: WSL2 사용 (권장)
+
 ```bash
 # WSL2에서 Redis 설치
 sudo apt update
@@ -25,6 +27,7 @@ sudo service redis-server status
 ```
 
 #### 방법 2: Docker 사용 (가장 간단)
+
 ```bash
 # Docker로 Redis 실행
 docker run -d -p 6379:6379 --name redis redis:latest
@@ -34,10 +37,12 @@ docker run -d -p 3001:6379 --name redis redis:latest
 ```
 
 #### 방법 3: Memurai 사용 (Windows 네이티브)
+
 1. [Memurai 다운로드](https://www.memurai.com/get-memurai) (Windows용 Redis 호환 서버)
 2. 설치 후 서비스로 실행
 
 ### macOS
+
 ```bash
 # Homebrew로 설치
 brew install redis
@@ -50,6 +55,7 @@ redis-server
 ```
 
 ### Linux
+
 ```bash
 # Ubuntu/Debian
 sudo apt update
@@ -77,17 +83,21 @@ REDIS_URL=redis://localhost:3001
 ## ✅ 연결 확인
 
 ### 방법 1: API 엔드포인트 사용
+
 개발 서버 실행 후 브라우저에서 접속:
+
 ```
 http://localhost:3000/api/redis/test
 ```
 
 ### 방법 2: 스크립트 사용
+
 ```bash
 npx tsx scripts/test-redis.ts
 ```
 
 ### 방법 3: Redis CLI 사용
+
 ```bash
 # Redis CLI로 연결 테스트
 redis-cli ping
@@ -100,16 +110,19 @@ redis-cli -p 3001 ping
 ## 🔧 문제 해결
 
 ### 문제 1: "Connection refused" 오류
+
 - Redis 서버가 실행 중인지 확인
 - 포트가 올바른지 확인 (기본: 6379)
 - 방화벽 설정 확인
 
 ### 문제 2: "ECONNREFUSED" 오류
+
 - Redis 서버가 해당 포트에서 리스닝 중인지 확인
 - `netstat -an | grep 6379` (Linux/Mac)
 - `netstat -an | findstr 6379` (Windows)
 
 ### 문제 3: 포트 충돌
+
 - 다른 포트 사용: `REDIS_URL=redis://localhost:6380`
 - 또는 다른 포트로 Redis 실행
 
@@ -137,4 +150,3 @@ echo "REDIS_URL=redis://localhost:6379" >> .env.local
 # 연결 테스트
 npx tsx scripts/test-redis.ts
 ```
-

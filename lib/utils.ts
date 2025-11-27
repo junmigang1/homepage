@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -22,7 +22,8 @@ export function formatRelativeTime(date: Date | string) {
   if (diffInSeconds < 60) return '방금 전'
   if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}분 전`
   if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}시간 전`
-  if (diffInSeconds < 2592000) return `${Math.floor(diffInSeconds / 86400)}일 전`
+  if (diffInSeconds < 2592000)
+    return `${Math.floor(diffInSeconds / 86400)}일 전`
   return formatDate(d)
 }
 
