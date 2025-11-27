@@ -150,3 +150,27 @@ echo "REDIS_URL=redis://localhost:6379" >> .env.local
 # 연결 테스트
 npx tsx scripts/test-redis.ts
 ```
+
+## 📚 가짜 데이터(Mock Data) 처리
+
+기존의 가짜 데이터(책, 사용자, 리뷰 등)를 Redis로 옮기려면 다음 스크립트를 실행하세요. 이 스크립트는 `scripts/seed-redis.ts`에 정의된 데이터를 Redis에 저장합니다.
+
+```bash
+# 데이터 시딩 (가짜 데이터 주입)
+npm run seed
+# 또는
+npx tsx scripts/seed-redis.ts
+```
+
+데이터를 초기화(삭제)하려면:
+
+```bash
+# 데이터 초기화
+npm run seed:clear
+# 또는
+npx tsx scripts/clear-redis.ts
+```
+
+### ⚠️ 주의사항
+데이터를 시딩한 후, 애플리케이션 컴포넌트(예: `LiveJourneyCarousel.tsx`)가 하드코딩된 데이터 대신 Redis에서 데이터를 가져오도록 코드를 수정해야 합니다.
+
